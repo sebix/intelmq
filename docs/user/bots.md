@@ -3526,6 +3526,49 @@ true.
 
 ---
 
+### SecurityTXT <div id="intelmq.bots.experts.securitytxt.expert" />
+
+SecurityTXT is an initiative to standardize how websites publish their abuse contact information. Currently it is a `draft RFC <https://datatracker.ietf.org/doc/html/draft-foudil-securitytxt-12>`_. See this draft RFC for more information on security.txt. This bot automatically looks for security.txt files on a URL or IP, retrieves the primary contact information out of it and adds this to the event.
+
+**Requirements**
+
+To use this bot, you need to install the required dependencies:
+
+```bash
+pip3 install -r intelmq/bots/experts/securitytxt/REQUIREMENTS.txt
+```
+
+**Module:** `intelmq.bots.experts.securitytxt.expert`
+
+**Parameters (also expects [cache parameters](#cache-parameters)):**
+
+**`url_field`**
+
+The field in the event that contains the URL/IP on which to look for the the security.txt file.
+
+**`contact_field`**
+
+The field in the event in which to put the found contact details
+
+**`only_email_address`**
+
+Contact details can be web URLs or email addresses. When this value is set to True, it only selects email addresses as contact information.
+
+**`overwrite`**
+
+Boolean indicating whether to override existing data in contact_field
+
+**`check_expired`**
+
+Boolean indicating whether to check if the security.txt has expired according to its own expiry date
+
+**`check_canonical`**
+
+Boolean indicating whether to check if the url is contained in the list of canonical urls.
+
+
+---
+
 ### Sieve <div id="intelmq.bots.experts.sieve.expert" />
 
 This bot is used to filter and/or modify events based on a set of rules. The rules are specified in an external
