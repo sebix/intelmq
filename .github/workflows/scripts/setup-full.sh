@@ -38,7 +38,16 @@ done
 # Setup sudo and install intelmq
 sudo sed -i '/^Defaults\tsecure_path.*$/ d' /etc/sudoers
 sudo pip install .
-sudo intelmqsetup --skip-ownership
+
+intelmq_user_exists=$(getent passwd intelmq ||:)
+if [[ "$UID" -eq '0' && -z "$intelmq_user_exists" ]]; then
+	# create an unprivileged user, if currently running as root. Otherwise dropping privileges won't work
+	groupadd -r intelmq
+	useradd -r -d /var/lib/intelmq/ -c "user running intelmq" -g intelmq -s /bin/bash intelmq
+	sudo intelmqsetup
+else
+	sudo intelmqsetup --skip-ownership
+fi
 
 # Initialize the postgres database
 intelmq_psql_initdb
