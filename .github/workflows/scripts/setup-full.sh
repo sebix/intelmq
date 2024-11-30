@@ -19,6 +19,8 @@ if [ $python_version == '3.8' ]; then
 	# for pymssql there are no wheels for 3.8 https://github.com/certtools/intelmq/issues/2539
 	DEBIAN_FRONTEND="noninteractive" sudo -E apt install -y build-essential freetds-dev libssl-dev libkrb5-dev
 fi
+# for psql (used below)
+DEBIAN_FRONTEND="noninteractive" sudo -E apt install -y postgresql-client-14
 
 # Install the dependencies of all the bots
 pip install wheel
