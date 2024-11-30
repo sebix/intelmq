@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2020 Birger Schacht
+# SPDX-FileCopyrightText: 2020 Birger Schacht, 2024 Institute for Common Good Technology
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 set -x
@@ -13,6 +13,12 @@ sudo sed -i.old 's/-Xmx1g/-Xmx128m/' /etc/elasticsearch/jvm.options
 echo -e '-XX:+DisableExplicitGC\n-Djdk.io.permissionsUseCanonicalPath=true\n-Dlog4j.skipJansi=true\n-server\n' | sudo tee -a /etc/elasticsearch/jvm.options
 sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
 sudo systemctl start elasticsearch
+
+sudo apt update
+if [ $python_version == '3.8' ]; then
+	# for pymssql there are no wheels for 3.8 https://github.com/certtools/intelmq/issues/2539
+	DEBIAN_FRONTEND="noninteractive" sudo -E apt install -y build-essential freetds-dev libssl-dev libkrb5-dev
+fi
 
 # Install the dependencies of all the bots
 pip install wheel

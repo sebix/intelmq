@@ -40,6 +40,7 @@
 ### Packaging
 
 ### Tests
+- Install build dependencies for `pymssql` on Python 3.8 as there are no wheels available for this Python version (PR#2542 by Sebastian Wagner).
 
 ### Tools
 
