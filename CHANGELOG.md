@@ -12,6 +12,7 @@
 ### Configuration
 
 ### Core
+- Python 3.8 or newer is required (PR#2541 by Sebastian Wagner).
 
 ### Development
 

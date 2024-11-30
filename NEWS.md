@@ -14,6 +14,7 @@ Please refer to the change log for a full list of changes.
 ---------------------------------
 
 ### Requirements
+Python 3.8 or newer is required
 
 ### Tools
 
@@ -36,7 +37,7 @@ No changes are required by administrators.
 ----------------------------------
 
 ### Documentation
-The documentation is now available at [docs.intelmq.org](https://docs.intelmq.org/). Documentation has been updated and restructured into User, Administrator and Developer Guide. It provides modern look with various quality of life improvements. Big thanks to to @gethvi. 
+The documentation is now available at [docs.intelmq.org](https://docs.intelmq.org/). Documentation has been updated and restructured into User, Administrator and Developer Guide. It provides modern look with various quality of life improvements. Big thanks to to @gethvi.
 We now have a slick, modern mkdocs based documentation. Please do check it out!
 
 
@@ -55,7 +56,7 @@ Shadowserver adds new scans on a nearly weekly basis. IntelMQ's release cycle an
 We therefore (thanks to @eslif2) move the shadowserver reports collector and parser to a new, dynamic system. It can:
 
  - fetch the shadowserver schema from shadowserver (https://interchange.shadowserver.org/intelmq/v1/schema)
- - dynamically collect new reports (see also https://docs.intelmq.org/latest/user/bots/?h=shadow#shadowserver-reports-api) 
+ - dynamically collect new reports (see also https://docs.intelmq.org/latest/user/bots/?h=shadow#shadowserver-reports-api)
  - parse the new reports
 
 **Note well**: if your IntelMQ system runs in an airgapped environment or if it may only reach out to specific IPs/sites, you should read the notes here:
@@ -86,7 +87,7 @@ Quite a few changes (thanks to Kamil, @gethvi) on AMQP
 ### General changes and bug fixes
 
 Digital Trust Center fixed a bug where the config was loaded twice in intelmqctl which created quite some speedups. Thanks!
-This speeds up IntelMQ API calls. 
+This speeds up IntelMQ API calls.
 
 ### Data Format
 
