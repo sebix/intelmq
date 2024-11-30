@@ -1,9 +1,18 @@
+# SPDX-FileCopyrightText: 2022 Frank Westers, 2024 Institute for Common Good Technology
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 from typing import Optional
 
 import requests
-from securitytxt import SecurityTXT
 
 from intelmq.lib.bot import ExpertBot
+from intelmq.lib.exceptions import MissingDependencyError
+
+try:
+    from securitytxt import SecurityTXT
+except (ImportError, ModuleNotFoundError):
+    SecurityTXT = None
 
 
 class SecurityTXTExpertBot(ExpertBot):
@@ -27,8 +36,8 @@ class SecurityTXTExpertBot(ExpertBot):
     check_canonical: bool = False
 
     def init(self):
-        if not self.url_field or not self.contact_field:
-            raise AttributeError("Not all required fields are set.")
+        if SecurityTXT is None:
+            raise MissingDependencyError('wellknown-securitytxt')
 
     def process(self):
         event = self.receive_message()
@@ -38,9 +47,9 @@ class SecurityTXTExpertBot(ExpertBot):
             primary_contact = self.get_primary_contact(event.get(self.url_field))
             event.add(self.contact_field, primary_contact, overwrite=self.overwrite)
         except NotMeetsRequirementsError as e:
-            self.logger.debug(str(e) + " Skipping event.")
+            self.logger.debug("Skipping event (%s).", e)
         except ContactNotFoundError as e:
-            self.logger.debug(f"No contact found. {str(e)} Continue.")
+            self.logger.debug("No contact found: %s Continue.", e)
 
         self.send_message(event)
         self.acknowledge_message()

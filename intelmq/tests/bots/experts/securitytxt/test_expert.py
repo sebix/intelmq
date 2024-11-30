@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2022 Frank Westers
+#
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 # -*- coding: utf-8 -*-
@@ -30,6 +32,7 @@ EXPECTED_OUTPUT_FQDN_NO_CONTACT = {"__type": "Event",
                                    "source.fqdn": "test.local"}
 
 @requests_mock.Mocker()
+@test.skip_exotic()
 class TestSecurityTXTExpertBot(test.BotTestCase, unittest.TestCase):
     """
     A TestCase for the SecurityTXT Expert Bot
