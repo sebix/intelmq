@@ -43,6 +43,7 @@
 - Install build dependencies for `pymssql` on Python 3.8 as there are no wheels available for this Python version (PR#2542 by Sebastian Wagner).
 - Install `psql` explicitly for workflow support on other platforms such as act (PR#2542 by Sebastian Wagner).
 - Create intelmq user & group if running privileged to allow dropping privileges (PR#2542 by Sebastian Wagner).
+- `intelmq.tests.lib.test_pipeline.TestAmqp.test_acknowledge`: Also skip on Python 3.11 besides on 3.8 when running on CI (PR#2542 by Sebastian Wagner).
 
 ### Tools
 
