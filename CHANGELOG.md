@@ -30,6 +30,10 @@
 #### Experts
 
 #### Outputs
+- `intelmq.bots.outputs.cif3.output`:
+  - The requirement can only be installed on Python version < 3.12.
+  - Add a check on the Python version and exit if incompatible.
+  - Add a deprecation warning (PR#2544 by Sebastian Wagner)
 
 ### Documentation
 
