@@ -14,7 +14,7 @@ Please refer to the change log for a full list of changes.
 ---------------------------------
 
 ### Requirements
-Python 3.8 or newer is required
+Python 3.8 or newer is required.
 
 ### Tools
 

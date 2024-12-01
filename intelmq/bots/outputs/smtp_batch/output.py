@@ -123,7 +123,7 @@ class SMTPBatchOutputBot(Bot):
         with open(self.mail_template) as f:
             self.mail_contents = f.read()
         if self.alternative_mails:
-            with open(self.alternative_mails, "r") as f:
+            with open(self.alternative_mails) as f:
                 self.alternative_mail = {row[0]: row[1] for row in csv.reader(f, delimiter=",")}
 
         print("Preparing mail queue...")
