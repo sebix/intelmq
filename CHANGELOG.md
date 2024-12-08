@@ -21,6 +21,7 @@
 #### Collectors
 - `intelmq.bots.collectors.shadowserver.collector_reports_api.py`:
   - Fixed behaviour if parameter `types` value is empty string, behave the same way as not set, not like no type.
+- `intelmq.bots.collectors.misp`: Use `PyMISP` class instead of deprecated `ExpandedPyMISP` (PR#2532 by Radek Vyhnal)
 
 #### Parsers
 - `intelmq.bots.parsers.shadowserver._config`:
@@ -29,6 +30,7 @@
   - Fix to avoid schema download if not configured #2530.
 
 #### Experts
+- `intelmq.bots.experts.misp`: Use `PyMISP` class instead of deprecated `ExpandedPyMISP` (PR#2532 by Radek Vyhnal)
 
 #### Outputs
 
