@@ -12,6 +12,7 @@
 ### Configuration
 
 ### Core
+- Python 3.8 or newer is required (PR#2541 by Sebastian Wagner).
 
 ### Development
 
@@ -19,6 +20,8 @@
 
 ### Bots
 #### Collectors
+- `intelmq.bots.collectors.shadowserver.collector_reports_api.py`:
+  - Fixed behaviour if parameter `types` value is empty string, behave the same way as not set, not like no type.
 
 #### Parsers
 - `intelmq.bots.parsers.shadowserver._config`:
@@ -31,12 +34,20 @@
   - Added new bot (PR#2538 by Frank Westers and Sebastian Wagner)
 
 #### Outputs
+- `intelmq.bots.outputs.cif3.output`:
+  - The requirement can only be installed on Python version < 3.12.
+  - Add a check on the Python version and exit if incompatible.
+  - Add a deprecation warning (PR#2544 by Sebastian Wagner)
 
 ### Documentation
 
 ### Packaging
 
 ### Tests
+- Install build dependencies for `pymssql` on Python 3.8 as there are no wheels available for this Python version (PR#2542 by Sebastian Wagner).
+- Install `psql` explicitly for workflow support on other platforms such as act (PR#2542 by Sebastian Wagner).
+- Create intelmq user & group if running privileged to allow dropping privileges (PR#2542 by Sebastian Wagner).
+- `intelmq.tests.lib.test_pipeline.TestAmqp.test_acknowledge`: Also skip on Python 3.11 besides on 3.8 when running on CI (PR#2542 by Sebastian Wagner).
 
 ### Tools
 

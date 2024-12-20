@@ -17,10 +17,7 @@ def is_re_pattern(value):
     """
     Checks if the given value is a re compiled pattern
     """
-    if sys.version_info > (3, 7):
-        return isinstance(value, re.Pattern)
-    else:
-        return hasattr(value, "pattern")
+    return isinstance(value, re.Pattern)
 
 
 class MatchGroupMapping:
