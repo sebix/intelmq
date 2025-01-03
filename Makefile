@@ -19,3 +19,6 @@ codespell:
 
 test:
 	pytest --no-cov -v intelmq/tests/ && echo "Success!"
+
+codestyle:
+	pycodestyle intelmq/{bots,lib,bin}
