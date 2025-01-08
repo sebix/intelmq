@@ -42,7 +42,7 @@
   - Add a deprecation warning (PR#2544 by Sebastian Wagner)
 
 ### Documentation
-- `docs/admin/installation/linux-packages`: Add `[signed-by=]` options, add wget command as alternative to curl
+- `docs/admin/installation/linux-packages`: Add `[signed-by=]` options, add wget command as alternative to curl (PR#2547 by Sebastian Wagner).
 
 ### Packaging
 
