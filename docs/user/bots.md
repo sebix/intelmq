@@ -3229,7 +3229,7 @@ This bots allows you to change arbitrary field values of events using a configur
 
 (optional, boolean) Overwrite any existing fields by matching rules. Defaults to false.
 
-**Configuration File**
+#### Configuration File Format
 
 The modify expert bot allows you to change arbitrary field values of events just using a configuration file. Thus it is
 possible to adapt certain values or adding new ones only by changing JSON-files without touching the code of many other
@@ -3240,17 +3240,65 @@ The configuration is called `modify.conf` and looks like this:
 ```json
 [
   {
-    "rulename": "Standard Protocols http",
+    "rulename": "Name of Rule 1",
     "if": {
-      "source.port": "^(80|443)$"
+      "fieldname": "comparison_value"
     },
     "then": {
-      "protocol.application": "http"
+      "fieldname": "newvalue"
     }
   },
+  [...]
+]
+```
+
+Each rule consists of a *rule name*, *conditions* and *actions*:
+The rule name is for your own documentation and only used in debugging output.
+Conditions and actions are dictionaries holding the field names of
+events and regular expressions to match values (selection) or set values (action). All matching rules will be applied in
+the given order. The actions of a rule are only performed if all conditions of the rule apply.
+
+One configuration file can contain an arbitrary number of rules.
+
+#### Condition
+
+* **Empty string**: If the value for a condition is an empty string, the bot checks if the field does not exist. This is useful to apply default values for empty fields.
+* A non-empty **string**: The matching uses [regular expressions](https://docs.python.org/3/library/re.html#re.search) to match the field. Use explicit beginning and end markers to match the full string instead of a substring: `^regex$`.
+  If the field is not a string, it will be converted to a string first. This allows for matching numeric values with regular expressions.
+* All **other types**: boolean, integer, float, etc: Direct equality comparison
+
+To check for the existence of a field, you can therefore always use the condition `"."`.
+
+#### Action
+
+You can set the value of the field to a string literal or number.
+
+In addition you can use the [standard Python string format syntax](https://docs.python.org/3/library/string.html#format-string-syntax) to access the values from the processed event as `msg` and the match groups of the conditions as `matches`, see the bitdefender example above. Group 0 ([`0`]) contains the full matching string. See also the documentation on [re.Match.group](https://docs.python.org/3/library/re.html?highlight=re%20search#re.Match.group).
+
+Setting a field to an empty string deletes the field, for example:
+```json
+[
   {
+    "rulename": "Delete NAICS",
+    "if": {
+      "extra.naics": "."
+    },
+    "then": {
+      "extra.naics": ""
+    }
+  }
+]
+```
+The same effect can be achieved with the [Field Reducer Expert](#intelmq.bots.experts.field_reducer.expert).
+
+#### Examples
+
+```json
+[
+{
     "rulename": "Spamhaus Cert conficker",
     "if": {
+     "feed.name": "^Spamhaus Cert$",
       "malware.name": "^conficker(ab)?$"
     },
     "then": {
@@ -3258,8 +3306,9 @@ The configuration is called `modify.conf` and looks like this:
     }
   },
   {
-    "rulename": "bitdefender",
+    "rulename": "Spamhaus Cert bitdefender",
     "if": {
+     "feed.name": "^Spamhaus Cert$",
       "malware.name": "bitdefender-(.*)$"
     },
     "then": {
@@ -3267,16 +3316,7 @@ The configuration is called `modify.conf` and looks like this:
     }
   },
   {
-    "rulename": "urlzone",
-    "if": {
-      "malware.name": "^urlzone2?$"
-    },
-    "then": {
-      "classification.identifier": "urlzone"
-    }
-  },
-  {
-    "rulename": "default",
+    "rulename": "Spamhaus Cert default",
     "if": {
       "feed.name": "^Spamhaus Cert$"
     },
@@ -3287,44 +3327,14 @@ The configuration is called `modify.conf` and looks like this:
 ]
 ```
 
-In our example above we have five groups labeled `Standard Protocols http`, `Spamhaus Cert conficker`,
-`bitdefender`, `urlzone` and `default`. All sections will be considered, in the given order (from top to bottom).
+In our example above we have three rules named `Spamhaus Cert conficker`,
+`Spamhaus Cert bitdefender` and `Spamhaus Cert default`.
 
-Each rule consists of *conditions* and *actions*. Conditions and actions are dictionaries holding the field names of
-events and regular expressions to match values (selection) or set values (action). All matching rules will be applied in
-the given order. The actions are only performed if all selections apply.
+Assume we have an event with `feed.name = Spamhaus Cert` and `malware.name = confickerab`, and `maximum_matches` is set to 1.
 
-If the value for a condition is an empty string, the bot checks if the field does not exist. This is useful to apply
-default values for empty fields.
+The expert loops over all sections in the file, and the first matching one is `Spamhaus Cert conficker`. It applies the action, setting the new `classification.identifier` and then stops, as the maximum matches has been reached.
 
-**Actions**
-
-You can set the value of the field to a string literal or number.
-
-In addition you can use the [standard Python string format syntax](https://docs.python.org/3/library/string.html#format-string-syntax) to access the values from the processed event as `msg` and the match groups of the conditions as `matches`, see the bitdefender example above. Group 0 ([`0`]) contains the full matching string. See also the documentation on [re.Match.group](https://docs.python.org/3/library/re.html?highlight=re%20search#re.Match.group).
-
-Note that `matches` will also contain the match groups from the default conditions if there were any.
-
-**Examples**
-
-We have an event with `feed.name = Spamhaus Cert` and `malware.name = confickerab`. The expert loops over all sections
-in the file and eventually enters section `Spamhaus Cert`. First, the default condition is checked, it matches!
-OK, going on. Otherwise the expert would have selected a different section that has not yet been considered. Now, go
-through the rules, until we hit the rule `conficker`. We combine the conditions of this rule with the default
-conditions, and both rules match! So we can apply the action: `classification.identifier` is set to `conficker`, the
-trivial name.
-
-Assume we have an event with `feed.name = Spamhaus Cert` and `malware.name = feodo`. The default condition matches, but
-no others. So the default action is applied. The value for `classification.identifier` will be set to `feodo`
-by `{msg[malware.name]}`.
-
-**Types**
-
-If the rule is a string, a regular expression search is performed, also for numeric values (`str()` is called on them).
-If the rule is numeric for numeric values, a simple comparison is done. If other types are mixed, a warning will be
-thrown.
-
-For boolean values, the comparison value needs to be `true` or `false` as in JSON they are written all-lowercase.
+Assume we have an event with `feed.name = Spamhaus Cert` and `malware.name = feodo`. The first and only matching rule is the `default`. So the default action is applied. The value for `classification.identifier` will be set to `feodo` by `{msg[malware.name]}`.
 
 ---
 
