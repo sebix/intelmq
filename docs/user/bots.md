@@ -3265,6 +3265,7 @@ One configuration file can contain an arbitrary number of rules.
 * **Empty string**: If the value for a condition is an empty string, the bot checks if the field does not exist. This is useful to apply default values for empty fields.
 * A non-empty **string**: The matching uses [regular expressions](https://docs.python.org/3/library/re.html#re.search) to match the field. Use explicit beginning and end markers to match the full string instead of a substring: `^regex$`.
   If the field is not a string, it will be converted to a string first. This allows for matching numeric values with regular expressions.
+  To escape a character in the regular expression, JSON requires you to double-escape, for example, in `"extra.version": "^10\\.0"` the `.` is matched as literal character.
 * All **other types**: boolean, integer, float, etc: Direct equality comparison
 
 To check for the existence of a field, you can therefore always use the condition `"."`.
