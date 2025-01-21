@@ -40,6 +40,8 @@
   - The requirement can only be installed on Python version < 3.12.
   - Add a check on the Python version and exit if incompatible.
   - Add a deprecation warning (PR#2544 by Sebastian Wagner)
+- `intelmq.bots.outputs.sql.output`:
+  - Treat an empty string `fields` parameter as unset parameter, fixing a crash in default configuration (PR#2548 by Sebastian Wagner, fixes #2548).
 
 ### Documentation
 - `docs/admin/installation/linux-packages`: Add `[signed-by=]` options, add wget command as alternative to curl (PR#2547 by Sebastian Wagner).
