@@ -23,11 +23,16 @@ Native packages are currently provided for the following Linux distributions:
 
 ### Debian 11 and 12
 
-Add the repository to the package manager and install IntelMQ (packages `intelmq-api` and `intelmq-manager` are optional):
+1. First, add the APT repository to the package manager:
 
 ```bash
-echo "deb http://download.opensuse.org/repositories/home:/sebix:/intelmq/Debian_$(lsb_release -rs)/ /" | sudo tee /etc/apt/sources.list.d/intelmq.list
+echo "deb [signed-by=/etc/apt/trusted.gpg.d/intelmq.gpg] http://download.opensuse.org/repositories/home:/sebix:/intelmq/Debian_$(lsb_release -rs)/ /" | sudo tee /etc/apt/sources.list.d/intelmq.list
 curl -fsSL "https://download.opensuse.org/repositories/home:sebix:intelmq/Debian_$(lsb_release -rs)/Release.key" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/intelmq.gpg > /dev/null
+# if curl is not available:
+wget "https://download.opensuse.org/repositories/home:sebix:intelmq/xUbuntu_$(lsb_release -rs)/Release.key" -O - | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/intelmq.gpg > /dev/null
+```
+2. Install the IntelMQ (packages `intelmq-api` and `intelmq-manager` are optional)
+```bash
 sudo apt update
 sudo apt install intelmq intelmq-api intelmq-manager
 ```
@@ -57,8 +62,10 @@ deb http://[...].archive.ubuntu.com/ubuntu/ focal main universe
 
 3. Next, add the IntelMQ APT Repository for Ubuntu:
 ```bash
-echo "deb http://download.opensuse.org/repositories/home:/sebix:/intelmq/xUbuntu_$(lsb_release -rs)/ /" | sudo tee /etc/apt/sources.list.d/intelmq.list
+echo "deb [signed-by=/etc/apt/trusted.gpg.d/intelmq.gpg] http://download.opensuse.org/repositories/home:/sebix:/intelmq/xUbuntu_$(lsb_release -rs)/ /" | sudo tee /etc/apt/sources.list.d/intelmq.list
 curl -fsSL "https://download.opensuse.org/repositories/home:sebix:intelmq/xUbuntu_$(lsb_release -rs)/Release.key" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/intelmq.gpg > /dev/null
+# if curl is not available:
+wget "https://download.opensuse.org/repositories/home:sebix:intelmq/xUbuntu_$(lsb_release -rs)/Release.key" -O - | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/intelmq.gpg > /dev/null
 ```
 
 3. Now update the list of available packages and install the IntelMQ packages:
