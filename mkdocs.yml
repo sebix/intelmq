@@ -119,6 +119,7 @@ nav:
       - Management:
           - IntelMQ: 'admin/management/intelmq.md'
           - IntelMQ API: 'admin/management/intelmq-api.md'
+          - intelmqctl: 'admin/management/intelmqctl-more.md'
       - Database:
           - PostgreSQL: 'admin/database/postgresql.md'
           - Elasticsearch: 'admin/database/elasticsearch.md'
