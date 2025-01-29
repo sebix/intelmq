@@ -20,7 +20,7 @@ if [ $python_version == '3.8' ]; then
 	DEBIAN_FRONTEND="noninteractive" sudo -E apt install -y build-essential freetds-dev libssl-dev libkrb5-dev
 fi
 # for psql (used below)
-DEBIAN_FRONTEND="noninteractive" sudo -E apt install -y postgresql-client-14
+DEBIAN_FRONTEND="noninteractive" sudo -E apt install -y postgresql-client
 
 # Install the dependencies of all the bots
 pip install wheel
