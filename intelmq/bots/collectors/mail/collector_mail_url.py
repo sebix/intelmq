@@ -67,7 +67,7 @@ class MailURLCollectorBot(MailCollectorBot, HttpMixin):
                 if not resp.content:
                     self.logger.warning('Got empty response from server.')
                 else:
-                    self.logger.info("Report downloaded.")
+                    self.logger.info("Report downloaded (%sB).", len(resp.content))
 
                     template = self.new_report()
                     template["feed.url"] = url

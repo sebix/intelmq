@@ -23,7 +23,10 @@
 - `intelmq.bots.collectors.shadowserver.collector_reports_api.py`:
   - Fixed behaviour if parameter `types` value is empty string, behave the same way as not set, not like no type.
 - `intelmq.bots.collectors.misp`: Use `PyMISP` class instead of deprecated `ExpandedPyMISP` (PR#2532 by Radek Vyhnal)
-- `intelmq.bots.collectors.mail.collector_mail_url`: Fix import for Timeout exception preventing another exception (fixes #2555, PR#2556 by Sebastian Wagner).
+- `intelmq.bots.collectors.http.collector_http`: Log the downloaded size in bytes to ease troubleshooting (PR#2554 by Sebastian Wagner).
+- `intelmq.bots.collectors.mail.collector_mail_url`:
+  - Log the downloaded size in bytes to ease troubleshooting (PR#2554 by Sebastian Wagner).
+  - Fix import for Timeout exception preventing another exception (fixes #2555, PR#2556 by Sebastian Wagner).
 
 #### Parsers
 - `intelmq.bots.parsers.shadowserver._config`:
