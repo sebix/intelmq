@@ -59,6 +59,7 @@
 - Create intelmq user & group if running privileged to allow dropping privileges (PR#2542 by Sebastian Wagner).
 - `intelmq.tests.lib.test_pipeline.TestAmqp.test_acknowledge`: Also skip on Python 3.11 besides on 3.8 when running on CI (PR#2542 by Sebastian Wagner).
 - Full pytest workflow: Version-independent install of postgres client, for Ubuntu 24.04 (default on GitHub now) test environment compatibility (PR#2557 by Sebastian Wagner).
+- Debian package build workflow: Use artifact upload v4 instead of v3 (PR#2565 by Sebastian Wagner).
 
 ### Tools
 
