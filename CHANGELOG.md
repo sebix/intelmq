@@ -1,5 +1,5 @@
 <!-- comment
-   SPDX-FileCopyrightText: 2015-2024 Sebastian Wagner
+   SPDX-FileCopyrightText: 2015-2025 Sebastian Wagner
    SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
@@ -13,6 +13,7 @@
 
 ### Core
 - Python 3.8 or newer is required (PR#2541 by Sebastian Wagner).
+- `intelmq.lib.utils.list_all_bots`/`intelmqctl check`: Fix check for bot executable in $PATH by using the bot name instead of the import path (fixes #2559, PR#2564 by Sebastian Wagner).
 
 ### Development
 
@@ -366,7 +367,7 @@ This is short list of the most important known issues. The full list can be retr
 - Added an ExpertBot class - it should be used by all expert bots as a parent class
 - Introduced a module for IntelMQ related datatypes `intelmq.lib.datatypes` which for now only contains an Enum listing the four bot types
 - Added a `bottype` attribute to CollectorBot, ParserBot, ExpertBot, OutputBot
-- Introduces a module for IntelMQ processmanagers. The processmanagers were up until now part of the intelmqct script.
+- Introduces a module for IntelMQ processmanagers. The processmanagers were up until now part of the intelmqctl script.
   They now reside in `intelmq.lib.processmanager` which also contains an interface definition the processmanager implementations must adhere to.
   Both the processmanagers and the `intelmqctl` script were cleaned up a bit.
   The `LogLevel` and `ReturnType` Enums were added to `intelmq.lib.datatypes`.
