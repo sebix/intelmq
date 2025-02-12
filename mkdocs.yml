@@ -93,8 +93,6 @@ markdown_extensions:
 nav:
   - Introduction: 'index.md'
   - Overview: 'overview.md'
-  - Tutorials:
-      - Using IntelMQ Manager: 'tutorials/intelmq-manager.md'
   - User Guide:
       - Intro: 'user/intro.md'
       - Event: 'user/event.md'

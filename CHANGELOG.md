@@ -51,6 +51,7 @@
 ### Documentation
 - `docs/admin/installation/linux-packages`: Add `[signed-by=]` options, add wget command as alternative to curl (PR#2547 by Sebastian Wagner).
 - Add documentation on the Redis pipeline (databases, configuration), fix generic pipeline documentation and add missing information on parameters, add unlinked intelmqctl docs to the index and TOC (PR#2560 by Sebastian Wagner).
+- Remove empty page tutorials/intelmq-manager (PR#2562 by Sebastian Wagner).
 
 ### Packaging
 
