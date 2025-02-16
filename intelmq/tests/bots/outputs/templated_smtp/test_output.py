@@ -67,7 +67,7 @@ class TestCustomTemplatedSMTPOutputBot(test.BotTestCase, unittest.TestCase):
             "attachments": yaml.load(attachments),
             "smtp_host": "localhost",
             "body": "URL: {{ event['source.url'] }}",
-            "subject": "{{ event['malware.name'] }} on {{ event['destination.fqdn'] }}",
+            "subject": "{{ event['malware.name'] }} on àé {{ event['destination.fqdn'] }}",
             "mail_from": "myself",
             "mail_to": "you,yourself"
         }
@@ -96,7 +96,7 @@ class TestCustomTemplatedSMTPOutputBot(test.BotTestCase, unittest.TestCase):
              unittest.mock.patch('smtplib.SMTP.close'):
             self.run_bot()
 
-        self.assertEqual(SENT_MESSAGE[0]["Subject"], "test-malware on destination.example.com")
+        self.assertEqual(SENT_MESSAGE[0]["Subject"], "test-malware on àé destination.example.com")
         self.assertEqual(SENT_MESSAGE[0]["From"], "myself")
         self.assertEqual(SENT_MESSAGE[0]["To"], "you, yourself")
         self.assertEqual(SENT_MESSAGE[0].get_payload()[0].get_payload(), "URL: http://example.com/\n")
@@ -124,7 +124,7 @@ System: destination.example.com""")
              unittest.mock.patch("smtplib.SMTP.close"):
             self.run_bot(parameters={"mail_to": "{{ event['source.abuse_contact'] }}"})
 
-        self.assertEqual(SENT_MESSAGE[0]["Subject"], "test-malware on destination.example.com")
+        self.assertEqual(SENT_MESSAGE[0]["Subject"], "test-malware on àé destination.example.com")
         self.assertEqual(SENT_MESSAGE[0]["From"], "myself")
         self.assertEqual(SENT_MESSAGE[0]["To"], ", ".join(EVENT1["source.abuse_contact"].split(",")))
         self.assertEqual({"from_addr": "myself", "to_addrs": ["one@example.com", "two@example.com"]},
