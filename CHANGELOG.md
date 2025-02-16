@@ -39,6 +39,7 @@
 - `intelmq.bots.experts.securitytxt`:
   - Added new bot (PR#2538 by Frank Westers and Sebastian Wagner)
 - `intelmq.bots.experts.misp`: Use `PyMISP` class instead of deprecated `ExpandedPyMISP` (PR#2532 by Radek Vyhnal)
+- `intelmq.bots.experts.fake.expert`: New expert to fake data (PR#2567 by Sebastian Wagner).
 
 #### Outputs
 - `intelmq.bots.outputs.cif3.output`:
